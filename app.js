@@ -27,21 +27,13 @@ mongoose
 .then(() => console.log("Connected to mongoDB"))
 .catch(err => console.log(err))
 
-app.use(bodyParser.urlencoded({ extended: false }));  //respond to req from other software like postman
-app.use(bodyParser.json());
+app.get("/", (req, res) => res.send("Hello Mickey"));
 
-app.get("/", (req, res) => {
-    const user = new User({
-        handle: "mic",
-        email: "mickey@gmail.com", 
-        password: "mickey123"
-    })
-    user.save()
-    res.send("Hi Everyone")
-})
-// app.get("/", (req, res) => res.send("Hello Mickey"));
 app.use(passport.initialize());
 require('./config/passport')(passport);
+
+app.use(bodyParser.urlencoded({ extended: false }));  //respond to req from other software like postman
+app.use(bodyParser.json());
 
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
